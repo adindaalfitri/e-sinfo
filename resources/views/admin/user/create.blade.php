@@ -93,6 +93,8 @@
     </div>
     <script>
         $('.dropify').dropify();
+
+        $('#level').select2();
     </script>
 
 @endsection

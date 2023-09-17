@@ -74,7 +74,6 @@
     
     {{-- SweetAlert --}}
     <script src="{{ asset('backoffice/js/SweetAlert.min.js') }}"></script>
-
     
     {{-- DataTable --}}
     <script src="{{ asset('backoffice/js/jquery.dataTables.js') }}"></script>
@@ -83,6 +82,10 @@
     {{-- Dropify --}}
     <script src="{{ asset('backoffice/js/dropify.js') }}"></script>
     <link href="{{ asset('backoffice/css/dropify.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('backoffice/js/select2.min.js') }}"></script>
+    <link href="{{ asset('backoffice/css/select2.min.css') }}" rel="stylesheet" />
+  
 
     @yield('head')
 
