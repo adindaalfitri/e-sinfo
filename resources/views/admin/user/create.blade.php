@@ -35,7 +35,7 @@
                             <div class="row mb-3">
                                 <label class="form-label" for="nama">Nama</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name"
+                                    <input type="text" class="form-control" @error('nama') is-invalid @enderror id="name" name="name"
                                         placeholder="Nama" required />
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 <label class="form-label" for="email">Email</label>
                                 <div class="col-sm-10">
                                     <div class="input-group input-group-merge">
-                                        <input type="email" autocomplete="off" id="email" name="email" required
+                                        <input type="email" @error('email') is-invalid @enderror autocomplete="off" id="email" name="email" required
                                             class="form-control" placeholder="email" aria-label="achmad.satria"
                                             aria-describedby="email2" />
                                         <span class="input-group-text" id="email2">@example.com</span>
@@ -53,14 +53,14 @@
                             <div class="mb-3 row">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="password" id="password" name="password" required
+                                    <input class="form-control" @error('password') is-invalid @enderror type="password" id="password" name="password" required
                                         fdprocessedid="jw8hfo" autocomplete="off">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="form-label" for="phone">Whatsapp</label>
                                 <div class="col-sm-10">
-                                    <input type="text" id="whatsapp" name="whatsapp" required
+                                    <input type="text" @error('whatsapp') is-invalid @enderror id="whatsapp" name="whatsapp" required
                                         class="form-control phone-mask" placeholder="088377189910"
                                         aria-describedby="phone" />
                                 </div>

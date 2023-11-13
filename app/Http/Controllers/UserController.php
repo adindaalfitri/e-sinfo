@@ -19,6 +19,14 @@ class UserController extends Controller
     }
 
     function store(Request $request) {
+        $message =
+        [
+        'requred' => ':atribute harus diisi dong',
+        'min' => ':atribute minimal :min karakter',
+        'max' => ':atribute maximal :max karakter',
+        'mimes' => 'file :harus bertipe :mimes'
+        ];
+
         $request->validate([
             'name' => 'required',
             'whatsapp' => 'required',
@@ -29,27 +37,28 @@ class UserController extends Controller
             'file' => 'required',
         ]);
 
+
         if ($request->file('file')) {
             $file_name = time() . '-' . $request->file('file')->getClientOriginalName();
             $image = $request->file('file')->storeAs('public/user', $file_name);
             $request['avatar'] = $file_name;
         }
-        
+
         $request['password'] = bcrypt($request['password']);
 
         User::create($request->all());
-        
+
         return redirect()->route('user.index')->with('success', 'User berhasil ditambah!');;
     }
-    
+
     function show() {
-        
+
     }
 
     function edit(User $user) {
         return view('admin.user.edit', compact('user'));
     }
-    
+
     function update(Request $request, User $user) {
         $request->validate([
             'name' => 'required',
@@ -58,7 +67,7 @@ class UserController extends Controller
             'level' => 'in:user,admin',
             'avatar' => 'nullable',
             'file' => 'required'
-            
+
         ]);
         if ($request->file('file')) {
             File::delete('storage/user/'. $user->avatar);
@@ -69,13 +78,13 @@ class UserController extends Controller
 
         if (!isset($request['password']) || $request['password'] != '') {
             $user->password = bcrypt($request['password']);
-        } 
+        }
 
         $user->name = $request->name;
         $user->email = $request->email;
         $user->level = $request->level;
         $user->update();
-        
+
         return redirect()->route('user.index')->with('success', 'User berhasil diubah!');
     }
 

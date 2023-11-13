@@ -1,16 +1,16 @@
 @extends('admin.template.app')
 
-@section('title', 'User')
+@section('title', 'Master Pengumuman')
 
 @section('content')
     <div class="col-xxl">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold m-0">User</h4>
+                <h4 class="fw-bold m-0">Daftar Pengumuman</h4>
                 <div class="d-flex gap-1 justify-content-end align-items-center">
-                    <a href="{{ route('user.create') }}">
+                    <a href="{{ route('pengumuman.create') }}">
                         <button type="button" class="btn btn-primary">
-                            <span class="tf-icons bx bx-plus"></span>&nbsp;Tambah User</button>
+                            <span class="tf-icons bx bx-plus"></span>&nbsp;Tambah Pengumuman</button>
                     </a>
                 </div>
             </div>
@@ -21,31 +21,36 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Whatsapp</th>
-                                <th>Level</th>
+                                <th>Foto</th>
+                                <th>Tanggal</th>
+                                <th>Topik</th>
+                                <th>Informasi</th>
+                                <th>Kelas</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @foreach ($user as $item)
+                            @foreach ($siswa as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->whatsapp }}</td>
-                                    <td>{{ $item->level }}</td>
-                                    <td class="d-flex gap-1">
-                                        <a href="{{ route('user.edit', $item->id) }}">
-                                            <button type="button" class="btn btn-icon btn-warning">
-                                                <span class="tf-icons bx bx-edit"></span>
-                                            </button>
-                                        </a>
-                                        <button onclick="deleteUser('{{ route('user.destroy', $item->id) }}')"
-                                            type="submit" class="btn btn-icon btn-danger btn-delete">
-                                            <span class="tf-icons bx bx-trash"></span>
-                                        </button>
+                                    <td><img width="200px" height="100px" src="/storage/pengumuman/{{ $item->foto}}" alt="Foto"></td>
+                                    <td>{{ $item->tanggal }}</td>
+                                    <td>{{ $item->topik }}</td>
+                                    <td>{{ $item->informasi }}</td>
+                                    <td>{{ $item->kelas }}</td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <a href="{{ route('pengumuman.edit', $item->id) }}">
+                                                <button type="button" class="btn btn-icon btn-warning">
+                                                    <span class="tf-icons bx bx-edit"></span>
+                                                </button>
+                                            </a>
+                                            <form action="{{route('pengumuman.destroy', $item->id)}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" onclick="return confirm('Apakah anda ingin menghapus data ini?')" class="btn btn-icon btn-danger"><span class="tf-icons bx bx-trash"></span></button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

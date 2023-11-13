@@ -17,17 +17,17 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = User::where('email', $credentials['email'])->first();
-            return redirect()->intended('/')->with('success', 'Berhasil login');
+            return redirect()->intended('dashboard')->with('success', 'Berhasil login');
         }
 
         return redirect()->route('login')->with('failed', 'Email atau password anda salah');
     }
-    
+
     function register() {
         return view('auth.register');
     }
@@ -46,6 +46,7 @@ class AuthController extends Controller
         $request['password'] = bcrypt($request['password']);
 
         User::create($request->all());
+
         
         return redirect()->route('register')->with('success', 'Berhasil membuat akun!');
     }
@@ -57,6 +58,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'Berhasil logout');
+        return redirect()->route('blog.index')->with('success', 'Berhasil logout');
     }
 }

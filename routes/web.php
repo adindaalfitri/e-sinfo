@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\PenanggungjawabController;
+use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\UserController;
+use App\Models\Pengumuman;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,13 +33,25 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::middleware('auth')->group(function() {
     Route::controller(DashboardController::class)->group(function () {
-        Route::get('/', 'index')->name('dashboard');    
+        Route::get('/dashboard', 'index')->name('dashboard');
     });
     Route::controller(MyProfileController::class)->group(function () {
-        Route::get('/myprofile/{user}', 'index')->name('myprofile.index');    
-        Route::put('/myprofile/update/{user}', 'update')->name('myprofile.update');    
+        Route::get('/myprofile/{user}', 'index')->name('myprofile.index');
+        Route::put('/myprofile/update/{user}', 'update')->name('myprofile.update');
     });
     Route::resources([
         'user' => UserController::class,
     ]);
 });
+
+Route::resource('/pengumuman',PengumumanController::class);
+
+Route::get('/', [GuestController::class, 'index'])->name('blog.index');
+
+Route::get('/penanggung', [PenanggungjawabController::class, 'index'])->name('pj.index');
+Route::get('/penanggung/create', [PenanggungjawabController::class, 'create'])->name('pj.create');
+Route::post('/penanggung/create', [PenanggungjawabController::class, 'store'])->name('pj.store');
+Route::get('/penanggung/edit/{id}', [PenanggungjawabController::class, 'edit'])->name('pj.edit');
+Route::post('/penanggung/edit/{id}', [PenanggungjawabController::class, 'update'])->name('pj.update');
+Route::delete('/penanggung/delete/{id}', [PenanggungjawabController::class, 'destroy'])->name('pj.destroy');
+

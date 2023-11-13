@@ -1,16 +1,16 @@
 @extends('admin.template.app')
 
-@section('title', 'User')
+@section('title', 'Master Penanggung jawab')
 
 @section('content')
     <div class="col-xxl">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold m-0">User</h4>
+                <h4 class="fw-bold m-0">Daftar Penanggung Jawab</h4>
                 <div class="d-flex gap-1 justify-content-end align-items-center">
-                    <a href="{{ route('user.create') }}">
+                    <a href="{{ route('pj.create') }}">
                         <button type="button" class="btn btn-primary">
-                            <span class="tf-icons bx bx-plus"></span>&nbsp;Tambah User</button>
+                            <span class="tf-icons bx bx-plus"></span>&nbsp;Tambah Penanggung Jawab</button>
                     </a>
                 </div>
             </div>
@@ -21,31 +21,32 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Whatsapp</th>
-                                <th>Level</th>
-                                <th>Actions</th>
+                                <th>Acara</th>
+                                <th>Penanggung Jawab</th>
+                                <th>Telepon</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @foreach ($user as $item)
+                            @foreach ($pj as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->whatsapp }}</td>
-                                    <td>{{ $item->level }}</td>
-                                    <td class="d-flex gap-1">
-                                        <a href="{{ route('user.edit', $item->id) }}">
-                                            <button type="button" class="btn btn-icon btn-warning">
-                                                <span class="tf-icons bx bx-edit"></span>
-                                            </button>
-                                        </a>
-                                        <button onclick="deleteUser('{{ route('user.destroy', $item->id) }}')"
-                                            type="submit" class="btn btn-icon btn-danger btn-delete">
-                                            <span class="tf-icons bx bx-trash"></span>
-                                        </button>
+                                    <td>{{ $item->acara }}</td>
+                                    <td>{{ $item->penanggungjawab }}</td>
+                                    <td>{{ $item->no_telp }}</td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <a href="{{ route('pj.edit', $item->id) }}">
+                                                <button type="button" class="btn btn-icon btn-warning">
+                                                    <span class="tf-icons bx bx-edit"></span>
+                                                </button>
+                                            </a>
+                                            <form action="{{route('pj.destroy', $item->id)}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" onclick="return confirm('Apakah anda ingin menghapus data ini?')" class="btn btn-icon btn-danger"><span class="tf-icons bx bx-trash"></span></button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
